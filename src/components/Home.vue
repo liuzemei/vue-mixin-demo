@@ -1,0 +1,62 @@
+<template>
+  <div>
+    <div class="uinfo">
+      个人信息
+      <ul>
+        <img :src="uinfo.avatar_url" />
+        <li>昵称：{{uinfo.full_name}}</li>
+        <li>Mixin ID：{{uinfo.identity_number}}</li>
+        <li>Phone：{{uinfo.phone}}</li>
+        <li>个人签名：{{uinfo.biography}}</li>
+      </ul>
+    </div>
+  </div>
+</template>
+
+<script>
+import { client_id } from "../../keystore.json";
+export default {
+  name: "Home",
+  data() {
+    return {
+      uinfo: {}
+    };
+  },
+  methods: {
+    to_auth() {
+      window.localStorage.clear();
+      window.location.href = `https://mixin.one/oauth/authorize?client_id=${client_id}&scope=SNAPSHOTS:READ+PROFILE:READ+PHONE:READ+ASSETS:READ+CONTACTS:READ&response_type=code&return_to=/`;
+    },
+    async get_user() {
+      let { data } = await this.APIS.get("/me");
+      this.uinfo = data.data;
+    }
+  },
+  mounted() {
+    window._vm = this;
+    if (!window.localStorage.getItem("token")) {
+      this.to_auth();
+    }
+    this.get_user();
+  }
+};
+</script>
+
+<style scoped>
+* {
+  padding: 0;
+  margin: 0;
+}
+.uinfo {
+  margin: 10px;
+}
+ul,
+li {
+  list-style: none;
+}
+
+img {
+  width: 5rem;
+  height: 5rem;
+}
+</style>
