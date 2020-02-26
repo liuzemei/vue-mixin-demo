@@ -3,16 +3,14 @@
 </template>
 
 <script>
-import tools from "@/assets/js/tools";
 import { authenticate } from "../api";
 
 export default {
   async mounted() {
     let { _vm } = window;
-    let error = tools.getUrlParameter("error");
-    let authorizationCode = tools.getUrlParameter("code");
-    let returnTo = tools.getUrlParameter("return_to");
-    console.log(_vm);
+    let error = getUrlParameter("error");
+    let authorizationCode = getUrlParameter("code");
+    let returnTo = getUrlParameter("return_to");
     if (!authorizationCode) {
       return _vm.to_auth();
     }
@@ -27,6 +25,15 @@ export default {
     this.$router.push(returnTo);
   }
 };
+
+function getUrlParameter(name) {
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+  var results = regex.exec(window.location.search);
+  return results === null
+    ? ""
+    : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 </script>
 
 <style>

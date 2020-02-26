@@ -1,5 +1,5 @@
 import axios from 'axios'
-import keystore from '../../keystore.json'
+import keystore from '../keystore.json'
 
 const ajax = axios.create({
   baseURL: "https://api.mixin.one"
