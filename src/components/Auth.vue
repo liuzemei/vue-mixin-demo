@@ -11,14 +11,8 @@ export default {
     let error = getUrlParameter("error");
     let authorizationCode = getUrlParameter("code");
     let returnTo = getUrlParameter("return_to");
-    if (!authorizationCode) {
-      return _vm.to_auth();
-    }
+    if (!authorizationCode || error === "access_denied") return _vm.to_auth();
     returnTo = !returnTo ? "/" : returnTo;
-    if (error === "access_denied") {
-      this.$message.error("Access denied.");
-      return _vm.to_auth();
-    }
     let { data } = await authenticate(authorizationCode);
     window.localStorage.setItem("token", data.access_token);
     window.localStorage.setItem("scope", data.scope);
