@@ -23,8 +23,8 @@ export default {
   },
   methods: {
     async get_user() {
-      let { data } = await this.APIS.get("/me");
-      this.uinfo = data.data;
+      this.uinfo = await this.APIS.get("/me");
+      
     }
   },
   mounted() {

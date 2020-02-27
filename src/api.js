@@ -7,15 +7,22 @@ const ajax = axios.create({
 
 
 ajax.interceptors.request.use(config => {
-  let vm = window._vm
+  let { _vm } = window
   let token = window.localStorage.getItem("token")
   if (!token) {
     setTimeout(() => {
-      vm.to_auth();
+      _vm.to_auth();
     }, 100)
   }
   config.headers.Authorization = "Bearer " + token
   return config
+})
+
+ajax.interceptors.response.use(res => {
+  let { data } = res
+  let { _vm } = window
+  if (data.error) return _vm.to_auth()
+  return data.data
 })
 
 async function authenticate(code) {
