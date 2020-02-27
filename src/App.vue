@@ -15,9 +15,8 @@ export default {
   },
   mounted() {
     window._vm = this;
-    if (!window.localStorage.getItem("token")) {
-      this.to_auth();
-    }
+    if (window.location.pathname === "/auth") return;
+    if (!window.localStorage.getItem("token")) this.to_auth();
   }
 };
 </script>
