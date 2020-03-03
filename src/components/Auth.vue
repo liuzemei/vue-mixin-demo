@@ -11,7 +11,6 @@ export default {
     let error = getUrlParameter("error");
     let authorizationCode = getUrlParameter("code");
     let returnTo = getUrlParameter("return_to");
-    debugger
     if (!authorizationCode || error === "access_denied") return _vm.to_auth();
     returnTo = !returnTo ? "/" : returnTo;
     let { data } = await authenticate(authorizationCode);
