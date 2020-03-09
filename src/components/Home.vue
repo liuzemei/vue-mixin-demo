@@ -4,8 +4,9 @@
       个人信息
       <ul>
         <img :src="uinfo.avatar_url" />
+        <li>User ID：{{uinfo.user_id}}</li>
         <li>昵称：{{uinfo.full_name}}</li>
-        <li>Mixin ID：{{uinfo.identity_number}}</li>
+        <li>Identity Number：{{uinfo.identity_number}}</li>
         <li>Phone：{{uinfo.phone}}</li>
         <li>个人签名：{{uinfo.biography}}</li>
       </ul>
